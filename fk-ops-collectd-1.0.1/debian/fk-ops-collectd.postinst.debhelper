@@ -1,0 +1,6 @@
+# Automatically added by dh_installinit
+if [ -x "/etc/init.d/fk-ops-collectd" ]; then
+	update-rc.d fk-ops-collectd defaults >/dev/null
+	invoke-rc.d fk-ops-collectd start || exit $?
+fi
+# End automatically added section

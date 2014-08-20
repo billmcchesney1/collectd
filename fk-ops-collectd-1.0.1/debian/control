@@ -1,0 +1,15 @@
+Source: fk-ops-collectd
+Section: unknown
+Priority: extra
+Maintainer: root <ops-tickets@flipkart.com>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev
+Standards-Version: 3.9.3
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: git://git.debian.org/collab-maint/fk-ops-collectd.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/fk-ops-collectd.git;a=summary
+
+Package: fk-ops-collectd
+Architecture: all
+Depends: ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

@@ -1,0 +1,5 @@
+fk-ops-collectd (1.0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- root <ops-tickets@flipkart.com>  Wed, 20 Aug 2014 18:09:11 +0530

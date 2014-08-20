@@ -1,0 +1,10 @@
+Package: fk-ops-collectd
+Version: 1.0.1-1
+Architecture: all
+Maintainer: root <ops-tickets@flipkart.com>
+Installed-Size: 9982
+Section: unknown
+Priority: extra
+Homepage: <insert the upstream URL, if relevant>
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

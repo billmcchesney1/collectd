@@ -1,0 +1,3 @@
+/etc/default/fk-ops-collectd
+/etc/init.d/fk-ops-collectd
+/etc/collectd.conf

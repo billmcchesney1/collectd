@@ -1,0 +1,22 @@
+=head2 Wed Aug 20 18:14:51 2014: C<Module> L<Collectd|Collectd>
+
+=over 4
+
+=item *
+
+C<installed into: /usr/share/perl/5.14.2>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: >
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
