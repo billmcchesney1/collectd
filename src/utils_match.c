@@ -74,15 +74,25 @@ static char *match_substr (const char *str, int begin, int end)
   return (ret);
 } /* char *match_substr */
 
-static int default_callback (const char __attribute__((unused)) *str,
+static int default_callback (const char *str,
     char * const *matches, size_t matches_num, void *user_data)
 {
+  DEBUG("utils_match : default callback for string : %s matches_num %d:", str, matches_num);
   cu_match_value_t *data = (cu_match_value_t *) user_data;
+  errno = 0;
 
   if (data->ds_type & UTILS_MATCH_DS_TYPE_GAUGE)
   {
+    DEBUG("utils_match : gauge data")
     gauge_t value;
     char *endptr = NULL;
+
+    if (isnan(data->value.gauge)){
+      DEBUG("utils_match data->value.gague is nan, setting to 0" )
+    }
+    if (isnan(data->value.values_num)){
+      DEBUG("utils_match data->value.values_num is nan, setting to 0" )
+    }
 
     if (data->ds_type & UTILS_MATCH_CF_GAUGE_INC)
     {
@@ -95,6 +105,13 @@ static int default_callback (const char __attribute__((unused)) *str,
       return (-1);
 
     value = (gauge_t) strtod (matches[1], &endptr);
+   if (errno != 0)
+    {
+        int errnum = errno;
+        DEBUG("utils_match : %s\n", errnum, strerror(errnum));
+    }else{
+      DEBUG("utils_match strtod : %f ", value);
+    }
     if (matches[1] == endptr)
       return (-1);
 
@@ -133,6 +150,14 @@ static int default_callback (const char __attribute__((unused)) *str,
   }
   else if (data->ds_type & UTILS_MATCH_DS_TYPE_COUNTER)
   {
+    DEBUG("utils_match : counter data")
+    if (isnan(data->value.counter)){
+      DEBUG("utils_match data->value.counter is nan, setting to 0" )
+    }
+    if (isnan(data->value.values_num)){
+      DEBUG("utils_match data->value.values_num is nan, setting to 0" )
+    }
+
     counter_t value;
     char *endptr = NULL;
 
@@ -147,6 +172,13 @@ static int default_callback (const char __attribute__((unused)) *str,
       return (-1);
 
     value = (counter_t) strtoull (matches[1], &endptr, 0);
+     if (errno != 0)
+    {
+        int errnum = errno;
+        DEBUG("utils_match : %d: %s\n", errnum, strerror(errnum));
+    }else{
+      DEBUG("utils_match strtoull : %llu ", value);
+    }
     if (matches[1] == endptr)
       return (-1);
 
@@ -164,6 +196,16 @@ static int default_callback (const char __attribute__((unused)) *str,
   }
   else if (data->ds_type & UTILS_MATCH_DS_TYPE_DERIVE)
   {
+    DEBUG("utils_match : derive data")
+    if (isnan(data->value.derive)){
+      DEBUG("utils_match data->value.counter is nan, setting to 0" )
+    }
+    if (isnan(data->value.counter)){
+      DEBUG("utils_match data->value.counter is nan, setting to 0" )
+    }
+    if (isnan(data->value.values_num)){
+      DEBUG("utils_match data->value.values_num is nan, setting to 0" )
+    }
     derive_t value;
     char *endptr = NULL;
 
@@ -178,6 +220,13 @@ static int default_callback (const char __attribute__((unused)) *str,
       return (-1);
 
     value = (derive_t) strtoll (matches[1], &endptr, 0);
+     if (errno != 0)
+    {
+        int errnum = errno;
+        DEBUG("utils_match : %d: %s\n", errnum, strerror(errnum));
+    }else{
+      DEBUG("utils_match strtoll : %lld ", value);
+    }
     if (matches[1] == endptr)
       return (-1);
 
@@ -195,13 +244,26 @@ static int default_callback (const char __attribute__((unused)) *str,
   }
   else if (data->ds_type & UTILS_MATCH_DS_TYPE_ABSOLUTE)
   {
+    DEBUG("utils_match : absolute data")
     absolute_t value;
     char *endptr = NULL;
-
+if (isnan(data->value.absolute)){
+      DEBUG("utils_match data->value.absolute is nan, setting to 0" )
+    }
+    if (isnan(data->value.values_num)){
+      DEBUG("utils_match data->value.values_num is nan, setting to 0" )
+    } 
     if (matches_num < 2)
       return (-1);
 
     value = (absolute_t) strtoull (matches[1], &endptr, 0);
+     if (errno != 0)
+    {
+        int errnum = errno;
+        DEBUG("utils_match : %d: %s\n", errnum, strerror(errnum));
+    }else{
+      DEBUG("utils_match strtoll : %llu ", value);
+    }
     if (matches[1] == endptr)
       return (-1);
 
