@@ -70,7 +70,7 @@ struct cu_tail_match_s
  */
 static int simple_submit_match (cu_match_t *match, void *user_data)
 {
-  DEBUG ("simple_submit_match: start")
+  DEBUG ("simple_submit_match: start");
   cu_tail_match_simple_t *data = (cu_tail_match_simple_t *) user_data;
   cu_match_value_t *match_value;
   value_list_t vl = VALUE_LIST_INIT;
@@ -84,12 +84,12 @@ static int simple_submit_match (cu_match_t *match, void *user_data)
   DEBUG ("simple_submit_match: match_value->values_num = %d", match_value->values_num);
 
   if ((match_value->ds_type & UTILS_MATCH_DS_TYPE_GAUGE)
-      && (match_value->values_num == 0))
+      && (match_value->values_num == 0)){
       DEBUG ("simple_submit_match: matching gauge, 0 values nan so submitting nan");
     values[0].gauge = NAN;
-  else
+  } else{
     values[0] = match_value->value;
-
+  }
   vl.values = values;
   vl.values_len = 1;
   sstrncpy (vl.host, hostname_g, sizeof (vl.host));
@@ -109,7 +109,7 @@ static int simple_submit_match (cu_match_t *match, void *user_data)
     match_value->value.gauge = NAN;
     match_value->values_num = 0;
   }
-  DEBUG ("simple_submit_match: end")
+  DEBUG ("simple_submit_match: end");
   return (0);
 } /* int simple_submit_match */
 
