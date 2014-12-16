@@ -88,9 +88,11 @@ static int default_callback (const char *str,
     char *endptr = NULL;
 
     if (isnan(data->value.gauge)){
-      DEBUG("utils_match data->value.gague is nan, setting to 0" );
+ 	data->value.gauge = 0;
+	DEBUG("utils_match data->value.gague is nan, setting to 0" );
     }
     if (isnan(data->values_num)){
+	data->values_num = 0;
       DEBUG("utils_match data->values_num is nan, setting to 0" );
     }
 
@@ -152,9 +154,11 @@ static int default_callback (const char *str,
   {
     DEBUG("utils_match : counter data");
     if (isnan(data->value.counter)){
+	data->value.counter = 0;
       DEBUG("utils_match data->value.counter is nan, setting to 0" );
     }
     if (isnan(data->values_num)){
+	data->values_num = 0;
       DEBUG("utils_match data->values_num is nan, setting to 0" );
     }
 
@@ -198,12 +202,15 @@ static int default_callback (const char *str,
   {
     DEBUG("utils_match : derive data");
     if (isnan(data->value.derive)){
+	data->value.derive = 0;
       DEBUG("utils_match data->value.counter is nan, setting to 0" );
     }
     if (isnan(data->value.counter)){
+	data->value.counter = 0;
       DEBUG("utils_match data->value.counter is nan, setting to 0" );
     }
     if (isnan(data->values_num)){
+	data->values_num = 0;
       DEBUG("utils_match data->values_num is nan, setting to 0" );
     }
     derive_t value;
@@ -249,8 +256,10 @@ static int default_callback (const char *str,
     char *endptr = NULL;
 if (isnan(data->value.absolute)){
       DEBUG("utils_match data->value.absolute is nan, setting to 0" );
+	data->value.absolute = 0;
     }
     if (isnan(data->values_num)){
+	data->values_num = 0;
       DEBUG("utils_match data->values_num is nan, setting to 0" );
     } 
     if (matches_num < 2)
