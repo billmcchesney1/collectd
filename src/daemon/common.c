@@ -373,6 +373,60 @@ int strsubstitute (char *str, char c_from, char c_to)
 	return (ret);
 } /* int strsubstitute */
 
+int escape_string (char *buffer, size_t buffer_size)
+{
+  char *temp;
+  size_t i;
+  size_t j;
+
+  /* Check if we need to escape at all first */
+  temp = strpbrk (buffer, " \t\"\\");
+  if (temp == NULL)
+    return (0);
+
+  if (buffer_size < 3)
+    return (EINVAL);
+
+  temp = (char *) malloc (buffer_size);
+  if (temp == NULL)
+    return (ENOMEM);
+  memset (temp, 0, buffer_size);
+
+  temp[0] = '"';
+  j = 1;
+
+  for (i = 0; i < buffer_size; i++)
+  {
+    if (buffer[i] == 0)
+    {
+      break;
+    }
+    else if ((buffer[i] == '"') || (buffer[i] == '\\'))
+    {
+      if (j > (buffer_size - 4))
+        break;
+      temp[j] = '\\';
+      temp[j + 1] = buffer[i];
+      j += 2;
+    }
+    else
+    {
+      if (j > (buffer_size - 3))
+        break;
+      temp[j] = buffer[i];
+      j++;
+    }
+  }
+
+  assert ((j + 1) < buffer_size);
+  temp[j] = '"';
+  temp[j + 1] = 0;
+
+  sstrncpy (buffer, temp, buffer_size);
+  sfree (temp);
+  return (0);
+} /* int escape_string */
+
 int strunescape (char *buf, size_t buf_len)
 {
 	size_t i;
@@ -421,8 +475,8 @@ size_t strstripnewline (char *buffer)
 		if ((buffer[buffer_len - 1] != '\n')
 				&& (buffer[buffer_len - 1] != '\r'))
 			break;
-		buffer[buffer_len] = 0;
 		buffer_len--;
+		buffer[buffer_len] = 0;
 	}
 
 	return (buffer_len);
@@ -1542,6 +1596,26 @@ int strtoderive (const char *string, derive_t *ret_value) /* {{{ */
 	*ret_value = tmp;
 	return (0);
 } /* }}} int strtoderive */
+
+int strtogauge (const char *string, gauge_t *ret_value) /* {{{ */
+{
+	gauge_t tmp;
+	char *endptr = NULL;
+
+	if ((string == NULL) || (ret_value == NULL))
+		return (EINVAL);
+
+	errno = 0;
+	endptr = NULL;
+	tmp = (gauge_t) strtod (string, &endptr);
+	if (errno != 0)
+		return (errno);
+	else if ((endptr == NULL) || (*endptr != 0))
+		return (EINVAL);
+
+	*ret_value = tmp;
+	return (0);
+} /* }}} int strtogauge */
 
 int strarray_add (char ***ret_array, size_t *ret_array_len, char const *str) /* {{{ */
 {
