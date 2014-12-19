@@ -89,11 +89,7 @@ static int simple_submit_match (cu_match_t *match, void *user_data)
     values[0].gauge = NAN;
   } else{
     DEBUG ("simple_submit_match: matching gauge, submitting match_value");
-     int i = 0;
-     for (i = 0; i < match_value->values_num; i++)
-    {
-    DEBUG ("simple_submit_match: %llu, %f, %" PRId64" %" PRIu64" .", values[i].counter, values[i].gauge, values[i].derive, values[i].absolute);
-    } 
+    DEBUG ("simple_submit_match: %llu, %f, %" PRId64" %" PRIu64" .", values[0].counter, values[0].gauge, values[0].derive, values[0].absolute);
     values[0] = match_value->value;
   }
   vl.values = values;

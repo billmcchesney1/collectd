@@ -168,6 +168,7 @@ static int default_callback (const char *str,
     if (data->ds_type & UTILS_MATCH_CF_COUNTER_INC)
     {
       data->value.counter++;
+      DEBUG("utils_match data->values.counter is %llu", data->value.counter );
       data->values_num++;
       return (0);
     }
