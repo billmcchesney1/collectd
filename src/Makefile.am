@@ -1399,6 +1399,16 @@ collectd_LDADD += "-dlopen" wireless.la
 collectd_DEPENDENCIES += wireless.la
 endif
 
+if BUILD_PLUGIN_WRITE_SYSLOG
+pkglib_LTLIBRARIES += write_syslog.la
+write_syslog_la_SOURCES = write_opentsdb.c \
+                        utils_format_syslog.c utils_format_opentsdb.h \
+                        utils_format_json.c utils_format_json.h
+write_syslog_la_LDFLAGS = -module -avoid-version
+collectd_LDADD += "-dlopen" write_syslog.la
+collectd_DEPENDENCIES += write_syslog.la
+endif
+
 if BUILD_PLUGIN_WRITE_OPENTSDB
 pkglib_LTLIBRARIES += write_opentsdb.la
 write_opentsdb_la_SOURCES = write_opentsdb.c \
