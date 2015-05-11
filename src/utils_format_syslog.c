@@ -400,11 +400,11 @@
  	{
  		char *head;
 
- 		assert (strchr(OPENTSDB_FORBIDDEN, escape_char) == NULL);
+ 		assert (strchr(SYSLOG_FORBIDDEN, escape_char) == NULL);
 
- 		for (head = buffer + strcspn(buffer, OPENTSDB_FORBIDDEN);
+ 		for (head = buffer + strcspn(buffer, SYSLOG_FORBIDDEN);
  			*head != '\0';
- 			head += strcspn(head, OPENTSDB_FORBIDDEN))
+ 			head += strcspn(head, SYSLOG_FORBIDDEN))
  			*head = escape_char;
  	}
 
@@ -418,7 +418,7 @@
  		int buffer_pos = 0;
 
  		gauge_t *rates = NULL;
- 		if (flags & OPENTSDB_STORE_RATES)
+ 		if (flags & SYSLOG_STORE_RATES)
  			rates = uc_get_rate (ds, vl);
 
  		for (i = 0; i < ds->ds_num; i++)
